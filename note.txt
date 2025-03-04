@@ -1,0 +1,64 @@
+to use prisma
+install prisma, @prisma/client
+
+Then initialize it in the project using
+npx prisma init
+
+run first migration
+npx prisma migrate dev --name init
+
+//Generate Prisma Client
+npx prisma generate
+
+
+Dockerrize
+Create a Dockerfile
+Create a .dockerignore file
+Create a docker-compose.yml file
+
+run:
+docker-compose up -d --build
+
+exec docker i.e generate prisma client in the docker
+run:
+docker exec -it <app_container_name_in_docker_compose.yml> npx prisma generate
+e.g docker exec -it express_api npx prisma generate
+
+migrate the database
+run
+docker exec -it <app_container_name_in_docker_compose.yml> npx prisma migrate dev --name init
+e.g docker exec -it express_api npx prisma migrate dev --name init
+
+to see the structure
+docker exec -it  <app_container_name_in_docker_compose.yml> npx prisma db pull
+e.g docker exec -it  express_api npx prisma db pull
+
+To see api logs
+docker logs <container_name> 
+e.g docker logs express_api
+
+To tear down 
+docker-compose down
+
+To restart 
+docker-compose up
+
+Now add prometheus
+
+install
+npm i prom-client
+
+my grafana password: Kolawolejohn@123
+
+For grafana
+1. add the configuration on docker-compose.yml
+2. build and run docker compose
+3. Once it is up go to the grafana url in my case on local i wemt to http://localhost:3001
+4. chnaged my password, I could actually skip it, but I did change my password
+5. Click on add new connection
+6. Add Prometheous
+7. The url I added was http://prometheus_prisma:9090 (prometheus_prisma is the container_name for that particular prometheus project)
+8. Go down and click on save
+9. Go to dashboard
+10. Click on add new dashboard
+11. Click on prometheus as Datasource
